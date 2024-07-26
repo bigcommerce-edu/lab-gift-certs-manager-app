@@ -13,7 +13,10 @@ const {
 } = process.env;
 
 type ApiEnv = {
-
+  clientId: string
+  accessToken: string
+  storeHash: string
+  responseType: string
 };
 
 export async function bcRest<ReqType> ({
@@ -29,9 +32,44 @@ export async function bcRest<ReqType> ({
   data?: ReqType,
   fetchOptions?: { cache?: RequestCache, next?: { revalidate: number } },
 }) {
-  return Promise.resolve({});
+  const env = await getApiEnv(session);
+  
+  return await fetch(
+    `${BC_API_URL}/stores/${env.storeHash}${path}`,
+    {
+      ...fetchOptions,
+      method,
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        'X-Auth-Token': env.accessToken,
+      },
+      ...(data && { body: JSON.stringify(data) })
+    }
+  ).then(res => res.json());
+
 };
 
 const getApiEnv = cache(async (session: Session | null): Promise<ApiEnv> => {
-  return {};
+  const env = {
+    responseType: "json",
+  };
+
+  if (NODE_ENV !== 'production' && API_TOKEN_MODE === "static") {
+    console.log({
+      tokenType: 'static',
+      storeHash: STATIC_STORE_HASH,
+      clientId: STATIC_CLIENT_ID,
+    });
+    return {
+      ...env,
+      clientId: STATIC_CLIENT_ID ?? '',
+      accessToken: STATIC_V3_TOKEN ?? '',
+      storeHash: STATIC_STORE_HASH ?? '',
+    };
+  } else if (session === null) {
+    throw new Error('Cannot retrieve API token without a session');
+  }
+
+  throw new Error('Session-based environment not implemented yet');
 });
