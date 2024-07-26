@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@bigcommerce/big-design": "1.2.0",
+    "@bigcommerce/big-design-theme": "1.0.1",
     "@types/jsonwebtoken": "^9",
     "firebase": "10.12.4",
     "jsonwebtoken": "9.0.2",
