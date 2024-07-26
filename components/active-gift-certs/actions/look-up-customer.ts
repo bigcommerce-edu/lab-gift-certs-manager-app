@@ -9,5 +9,20 @@ export const lookUpCustomers = async (
   email: string, 
   sessionToken: string | null
 ) => {
-  return [];
+  const session = (sessionToken !== null) ? decodeSession(sessionToken) : null;
+
+  try {
+    const customersResult = await bcRest({
+      path: '/v3/customers?email:in=' + escape(email),
+      method: 'GET',
+      session,
+      fetchOptions: { next: { revalidate: 60 } },
+    });
+
+    const { data } = CustomersSchema.parse(customersResult);
+    return data;
+  } catch (e) {
+    console.log(e);
+    return [];
+  }
 };
