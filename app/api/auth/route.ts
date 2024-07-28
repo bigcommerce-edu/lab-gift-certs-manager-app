@@ -12,6 +12,12 @@ export const GET = async (request: NextRequest) => {
     const authResult = await appAuth(searchParams);
     const storeHash = authResult.context.split('/')[1] || authResult.context;
 
+    await Promise.all([
+      db.setStore(authResult),
+      db.setUser(authResult.user),
+      db.setStoreUser(authResult),
+    ]);
+
     const redirectUrl = getUrl(APP_ORIGIN ?? '', {
       storeHash,
     });
