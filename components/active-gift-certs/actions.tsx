@@ -6,15 +6,8 @@ import { GiftCert } from "@/types/gift-certs";
 import { Customer } from "@/types/customer";
 import { lookUpCustomers } from "./actions/look-up-customer";
 import { applyGiftCertificate } from "./actions/apply-gift-cert";
-import styled from 'styled-components';
-
-const Button = styled.button`
-  padding: 5px;
-`;
-
-const ErrorMsg = styled.div`
-  color: red;
-`;
+import { AlertProps, Box, Button, Select } from "@bigcommerce/big-design";
+import { alertsManager } from "@/app/theme-provider";
 
 const ActiveGiftCertActions = ({
   giftCert
@@ -25,7 +18,6 @@ const ActiveGiftCertActions = ({
   const [matchingCustomers, setMatchingCustomers] = useState<Customer[] | null>(null);
   const [customerId, setCustomerId] = useState(0);
   const [applied, setApplied] = useState(false);
-  const [error, setError] = useState<string|null>(null);
 
   const searchParams = useSearchParams();
   const sessionToken = searchParams?.get('session') ?? null;
@@ -46,14 +38,18 @@ const ActiveGiftCertActions = ({
     if (customerId === 0) return;
 
     setPending(true);
-    setError(null);
 
     try {
       await applyGiftCertificate(giftCert.id, customerId, sessionToken);
       setApplied(true);
     } catch (e) {
       const message = (e instanceof Error) ? e.message : e as string;
-      setError(message);
+      const error: AlertProps = {
+        header: 'Error',
+        messages: [{ text: message }],
+        type: 'error',
+      };
+      alertsManager.add(error);
     }
 
     setPending(false);
@@ -61,55 +57,54 @@ const ActiveGiftCertActions = ({
 
   return (
     <>
-      {error !== null && (
-        <ErrorMsg>{error}</ErrorMsg>
-      )}
-
       {applied && (
-        <span>
+        <Box backgroundColor="secondary20" 
+          padding="large">      
           Applied
-        </span>
+        </Box>
       )}
 
       {!applied && matchingCustomers === null && (
-        <Button 
+        <Button
+          isLoading={pending}
           onClick={customerLookup}
+          variant="secondary"
         >
-          {pending ? '...' : 'Apply'}
+          Apply
         </Button>
       )}
 
       {!applied && matchingCustomers !== null && matchingCustomers.length > 0 && (
         <>
-          <div>
-            <select
-              onChange={(e) => setCustomerId(parseInt(e.target.value))}
-              value={customerId}
-            >
-              <>
-                <option value="0">--</option>
-                {matchingCustomers.map(customer => (
-                  <option key={customer.id}
-                    value={customer.id}
-                  > 
-                    {customer.email} (Channel {customer.origin_channel_id}
-                  </option>
-                ))}
-              </>
-            </select>
-          </div>
+          <Box marginBottom="large">
+            <Select
+                label="Matching Customers"
+                onOptionChange={(val: number) => setCustomerId(val)}
+                options={matchingCustomers.map(customer => {
+                  return { 
+                    value: customer.id, 
+                    content: `${customer.email} (Channel ${customer.origin_channel_id})`
+                  };
+                })}
+                required
+                value={customerId}
+              />
+          </Box>
           <Button
+            isLoading={pending}
             onClick={handleApplyGiftCertificate}
+            variant="primary"
           >
-            {pending ? '...' : 'Apply to Customer'}
+            Apply to Customer
           </Button>
         </>
       )}
 
       {!applied && matchingCustomers !== null && matchingCustomers.length <= 0 && (
-          <span>
+        <Box backgroundColor="secondary20" 
+          padding="large">
             No registered customers with recipient email address
-          </span>
+        </Box>
       )}
     </>
   );

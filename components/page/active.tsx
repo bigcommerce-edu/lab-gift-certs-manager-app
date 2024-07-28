@@ -2,20 +2,7 @@
 
 import ActiveGiftCertActions from "../active-gift-certs/actions";
 import { GiftCerts, GiftCert } from "@/types/gift-certs";
-import styled from 'styled-components';
-
-const cellStyles = `
-  border: 1px solid rgb(var(--foreground-rgb));
-  padding: 20px;
-`;
-
-const ActiveCertsTable = styled.table`
-  border-collapse: collapse;
-  margin: 20px;
-`;
-
-const TableHeader = styled.th`${cellStyles}`;
-const TableCell = styled.td`${cellStyles}`;
+import { Panel, Table } from "@bigcommerce/big-design";
 
 const Active = ({ 
   giftCerts 
@@ -56,28 +43,12 @@ const Active = ({
   ];
 
   return (
-    <ActiveCertsTable>
-      <thead>
-        <tr>
-          {columns.map(column => (
-            <TableHeader key={column.hash}>
-              {column.header}
-            </TableHeader>
-          ))}
-        </tr>
-      </thead>
-      <tbody>
-        {giftCerts.map(giftCert => (
-          <tr key={giftCert.id}>
-            {columns.map(column => (
-              <TableCell key={column.hash}>
-                {column.render(giftCert)}
-              </TableCell>
-            ))}
-          </tr>
-        ))}
-      </tbody>
-    </ActiveCertsTable>
+    <Panel header="Active Gift Certificates">
+      <Table
+        columns={columns}
+        items={giftCerts}
+      />
+    </Panel>
   );
 };
 
