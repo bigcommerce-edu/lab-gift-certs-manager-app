@@ -5,6 +5,10 @@ const { DB_TYPE } = process.env;
 
 let db:Db;
 
-db = {};
+switch (DB_TYPE) {
+  case 'firebase':
+  default:
+    db = firebase;
+}
 
 export default db;
