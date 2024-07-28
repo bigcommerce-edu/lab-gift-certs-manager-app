@@ -1,16 +1,10 @@
 'use client';
 
-import styled from 'styled-components';
-
-const HomeContainer = styled.div`
-  margin: 50px;
-`;
+import { Panel } from "@bigcommerce/big-design";
 
 const Home = () => {
   return (
-    <HomeContainer>
-      <h1>Welcome to the Gift Certificates Manager</h1>
-    </HomeContainer>
+    <Panel header="Welcome to the Gift Certificates Manager" />
   );
 };
 
