@@ -10,8 +10,13 @@ export const GET = async (request: NextRequest) => {
 
   try {
     const authResult = await appAuth(searchParams);
+    const storeHash = authResult.context.split('/')[1] || authResult.context;
+
+    const redirectUrl = getUrl(APP_ORIGIN ?? '', {
+      storeHash,
+    });
   
-    return NextResponse.redirect(new URL('/', APP_ORIGIN), { 
+    return NextResponse.redirect(redirectUrl, { 
       status: 302,
       statusText: 'Found',
     });
