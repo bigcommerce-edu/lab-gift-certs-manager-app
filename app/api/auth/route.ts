@@ -6,5 +6,17 @@ import db from '@/lib/db';
 const { APP_ORIGIN } = process.env;
 
 export const GET = async (request: NextRequest) => {
-  return NextResponse.json({}, { status: 200 });
+  const searchParams = request.nextUrl.searchParams;
+
+  try {
+    const authResult = await appAuth(searchParams);
+  
+    return NextResponse.redirect(new URL('/', APP_ORIGIN), { 
+      status: 302,
+      statusText: 'Found',
+    });
+  } catch (e) {
+    const message = (e instanceof Error) ? e.message : e;
+    return NextResponse.json({ status: 'error', message }, { status: 500 });
+  }
 };
