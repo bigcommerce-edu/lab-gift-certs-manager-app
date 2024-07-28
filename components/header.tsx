@@ -4,22 +4,7 @@ import { usePathname } from 'next/navigation';
 import { useSearchParams } from 'next/navigation';
 import { getSessionTokenFromQueryParams, getUrl } from '@/lib/session';
 import { useRouter } from 'next/navigation';
-import styled from 'styled-components';
-
-const NavList = styled.ul`
-  margin: 20px;
-`;
-
-const NavListItem = styled.li`
-  display: inline-block;
-  margin: 0 20px 0 0;
-  padding: 0 0 0 20px;
-  border-left: 1px solid rgb(var(--foreground-rgb));
-`;
-
-const NavLink = styled.a`
-  color: #0d52ff;
-`;
+import { Box, Tabs } from '@bigcommerce/big-design';
 
 const Header = ({
   className
@@ -62,19 +47,13 @@ const Header = ({
 
   return (
     <header className={className}>
-      <NavList>
-        {navItems.map(navItem => (
-          <NavListItem key={navItem.id}>
-            {navItem === activeTab ? (
-              <span>{navItem.title}</span>
-            ) : (
-              <NavLink href="#" 
-                onClick={e => { e.preventDefault(); handleTabClick(navItem.id); } }
-              >{navItem.title}</NavLink>
-            )}
-          </NavListItem>
-        ))}
-      </NavList>
+      <Box margin="xxLarge">
+        <Tabs
+          activeTab={activeTab?.id}
+          items={navItems}
+          onTabClick={handleTabClick}
+        />
+      </Box>
     </header>
   )
 };
