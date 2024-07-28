@@ -71,5 +71,20 @@ const getApiEnv = cache(async (session: Session | null): Promise<ApiEnv> => {
     throw new Error('Cannot retrieve API token without a session');
   }
 
-  throw new Error('Session-based environment not implemented yet');
+  const accessToken = await db.getStoreToken(session.storeHash);
+  if (accessToken === null) {
+    throw new Error('No API token found');
+  }
+
+  console.log({
+    tokenType: 'app',
+    storeHash: session.storeHash,
+    clientId: APP_CLIENT_ID,
+  });
+  return {
+    ...env,
+    clientId: APP_CLIENT_ID ?? '',
+    accessToken, 
+    storeHash: session.storeHash, 
+  };
 });
