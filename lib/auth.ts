@@ -52,5 +52,10 @@ export async function appAuth(query: URLSearchParams) {
 }
 
 export async function appVerify(query: URLSearchParams) {
-  return { sub: '' };
+  const token = query.get('signed_payload_jwt');
+  const decoded = jwt.verify(
+    token ?? '',
+    APP_CLIENT_SECRET ?? ''
+  );
+  return VerifyResultSchema.parse(decoded);
 }
