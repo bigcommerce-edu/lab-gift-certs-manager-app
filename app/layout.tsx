@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Header from "@/components/header";
 import StyledComponentsRegistry from "@/lib/styled-components-registry";
 import ThemeProvider from "./theme-provider";
+import { Suspense } from "react";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -18,6 +19,9 @@ export default function RootLayout({
       <body>
         <StyledComponentsRegistry>
           <div>
+            <Suspense>
+              <Header />
+            </Suspense>
             {children}
           </div>
         </StyledComponentsRegistry>
