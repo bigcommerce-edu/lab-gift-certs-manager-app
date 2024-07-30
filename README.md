@@ -1,36 +1,64 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# BigCommerce Gift Certificates Manager App
+
+This project supports guided lab exercises to walk through the conversion of a simple Next.js Gift Certificate Manager app into a BigCommerce Single-Click App.
+
+## Prerequisites
+
+* Node.js 20 or later
+* [Google Firebase](https://firebase.google.com/) project, web app credentials, and Firestore database
+* [ngrok](https://ngrok.com/) or similar remote tunnel provider
 
 ## Getting Started
 
-First, run the development server:
+Copy the _starter_ branch.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+```shell
+pnpm create next-app@latest -e https://github.com/bigcommerce-edu/lab-gift-certs-manager-app/tree/starter /path/to/working/directory
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+[See the starter state](https://github.com/bigcommerce-edu/lab-gift-certs-manager-app/tree/starter)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Labs
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### Lab 1
 
-## Learn More
+[Completed lab state](https://github.com/bigcommerce-edu/lab-gift-certs-manager-app/tree/lab-oauth-complete)
 
-To learn more about Next.js, take a look at the following resources:
+* [Step 1 diff](https://github.com/bigcommerce-edu/lab-gift-certs-manager-app/compare/starter...lab-oauth-01)
+* [Step 2 diff](https://github.com/bigcommerce-edu/lab-gift-certs-manager-app/compare/lab-oauth-01...lab-oauth-02)
+* [Step 3 diff](https://github.com/bigcommerce-edu/lab-gift-certs-manager-app/compare/lab-oauth-02...lab-oauth-03)
+* [Step 4 diff](https://github.com/bigcommerce-edu/lab-gift-certs-manager-app/compare/lab-oauth-03...lab-oauth-04)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+[Full lab diff](https://github.com/bigcommerce-edu/lab-gift-certs-manager-app/compare/starter...lab-oauth-complete)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+### Lab 2
 
-## Deploy on Vercel
+Fresh setup:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```shell
+pnpm create next-app@latest -e https://github.com/bigcommerce-edu/lab-gift-certs-manager-app/tree/lab-db-storage-start /path/to/working/directory
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+[Completed lab state](https://github.com/bigcommerce-edu/lab-gift-certs-manager-app/tree/lab-db-storage-complete)
+
+* [Step 1 diff](https://github.com/bigcommerce-edu/lab-gift-certs-manager-app/compare/lab-db-storage-start...lab-db-storage-01)
+* [Step 2 diff](https://github.com/bigcommerce-edu/lab-gift-certs-manager-app/compare/lab-db-storage-01...lab-db-storage-02)
+* [Step 3 diff](https://github.com/bigcommerce-edu/lab-gift-certs-manager-app/compare/lab-db-storage-02...lab-db-storage-03)
+* [Step 4 diff](https://github.com/bigcommerce-edu/lab-gift-certs-manager-app/compare/lab-db-storage-03...lab-db-storage-04)
+
+[Full lab diff](https://github.com/bigcommerce-edu/lab-gift-certs-manager-app/compare/lab-db-storage-start...lab-db-storage-complete)
+
+### Lab 3
+
+Fresh setup:
+
+```shell
+pnpm create next-app@latest -e https://github.com/bigcommerce-edu/lab-gift-certs-manager-app/tree/lab-big-design-start /path/to/working/directory
+```
+
+[Completed lab state](https://github.com/bigcommerce-edu/lab-gift-certs-manager-app/tree/lab-big-design-complete)
+
+* [Step 1 diff](https://github.com/bigcommerce-edu/lab-gift-certs-manager-app/compare/lab-big-design-start...lab-big-design-01)
+* [Step 2 diff](https://github.com/bigcommerce-edu/lab-gift-certs-manager-app/compare/lab-big-design-01...lab-big-design-02)
+
+[Full lab diff](https://github.com/bigcommerce-edu/lab-gift-certs-manager-app/compare/lab-big-design-start...lab-big-design-complete)
